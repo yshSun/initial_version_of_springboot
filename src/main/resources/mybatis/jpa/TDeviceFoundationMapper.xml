@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.test.mapper.jpa.TDeviceFoundationMapper">
+  <resultMap id="BaseResultMap" type="com.fc.test.model.jpa.TDeviceFoundation">
+    <id column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="state_id" jdbcType="VARCHAR" property="stateId" />
+    <result column="device_belong" jdbcType="VARCHAR" property="deviceBelong" />
+    <result column="device_location_x" jdbcType="DOUBLE" property="deviceLocationX" />
+    <result column="device_location_y" jdbcType="DOUBLE" property="deviceLocationY" />
+    <result column="device_user_id" jdbcType="VARCHAR" property="deviceUserId" />
+    <result column="device_health" jdbcType="INTEGER" property="deviceHealth" />
+    <result column="state_tmp" jdbcType="REAL" property="stateTmp" />
+    <result column="state_hum" jdbcType="REAL" property="stateHum" />
+    <result column="state_power" jdbcType="REAL" property="statePower" />
+    <result column="state_isfire" jdbcType="INTEGER" property="stateIsfire" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    device_id, state_id, device_belong, device_location_x, device_location_y, device_user_id, 
+    device_health, state_tmp, state_hum, state_power, state_isfire
+  </sql>
+  <select id="selectByExample" parameterType="com.fc.test.model.jpa.TDeviceFoundationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_device_foundation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_foundation
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_device_foundation
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fc.test.model.jpa.TDeviceFoundationExample">
+    delete from t_device_foundation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fc.test.model.jpa.TDeviceFoundation">
+    insert into t_device_foundation (device_id, state_id, device_belong, 
+      device_location_x, device_location_y, device_user_id, 
+      device_health, state_tmp, state_hum, 
+      state_power, state_isfire)
+    values (#{deviceId,jdbcType=VARCHAR}, #{stateId,jdbcType=VARCHAR}, #{deviceBelong,jdbcType=VARCHAR}, 
+      #{deviceLocationX,jdbcType=DOUBLE}, #{deviceLocationY,jdbcType=DOUBLE}, #{deviceUserId,jdbcType=VARCHAR}, 
+      #{deviceHealth,jdbcType=INTEGER}, #{stateTmp,jdbcType=REAL}, #{stateHum,jdbcType=REAL}, 
+      #{statePower,jdbcType=REAL}, #{stateIsfire,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fc.test.model.jpa.TDeviceFoundation">
+    insert into t_device_foundation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="stateId != null">
+        state_id,
+      </if>
+      <if test="deviceBelong != null">
+        device_belong,
+      </if>
+      <if test="deviceLocationX != null">
+        device_location_x,
+      </if>
+      <if test="deviceLocationY != null">
+        device_location_y,
+      </if>
+      <if test="deviceUserId != null">
+        device_user_id,
+      </if>
+      <if test="deviceHealth != null">
+        device_health,
+      </if>
+      <if test="stateTmp != null">
+        state_tmp,
+      </if>
+      <if test="stateHum != null">
+        state_hum,
+      </if>
+      <if test="statePower != null">
+        state_power,
+      </if>
+      <if test="stateIsfire != null">
+        state_isfire,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="stateId != null">
+        #{stateId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceBelong != null">
+        #{deviceBelong,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceLocationX != null">
+        #{deviceLocationX,jdbcType=DOUBLE},
+      </if>
+      <if test="deviceLocationY != null">
+        #{deviceLocationY,jdbcType=DOUBLE},
+      </if>
+      <if test="deviceUserId != null">
+        #{deviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceHealth != null">
+        #{deviceHealth,jdbcType=INTEGER},
+      </if>
+      <if test="stateTmp != null">
+        #{stateTmp,jdbcType=REAL},
+      </if>
+      <if test="stateHum != null">
+        #{stateHum,jdbcType=REAL},
+      </if>
+      <if test="statePower != null">
+        #{statePower,jdbcType=REAL},
+      </if>
+      <if test="stateIsfire != null">
+        #{stateIsfire,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fc.test.model.jpa.TDeviceFoundationExample" resultType="java.lang.Long">
+    select count(*) from t_device_foundation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_device_foundation
+    <set>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateId != null">
+        state_id = #{record.stateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceBelong != null">
+        device_belong = #{record.deviceBelong,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceLocationX != null">
+        device_location_x = #{record.deviceLocationX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.deviceLocationY != null">
+        device_location_y = #{record.deviceLocationY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.deviceUserId != null">
+        device_user_id = #{record.deviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceHealth != null">
+        device_health = #{record.deviceHealth,jdbcType=INTEGER},
+      </if>
+      <if test="record.stateTmp != null">
+        state_tmp = #{record.stateTmp,jdbcType=REAL},
+      </if>
+      <if test="record.stateHum != null">
+        state_hum = #{record.stateHum,jdbcType=REAL},
+      </if>
+      <if test="record.statePower != null">
+        state_power = #{record.statePower,jdbcType=REAL},
+      </if>
+      <if test="record.stateIsfire != null">
+        state_isfire = #{record.stateIsfire,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_device_foundation
+    set device_id = #{record.deviceId,jdbcType=VARCHAR},
+      state_id = #{record.stateId,jdbcType=VARCHAR},
+      device_belong = #{record.deviceBelong,jdbcType=VARCHAR},
+      device_location_x = #{record.deviceLocationX,jdbcType=DOUBLE},
+      device_location_y = #{record.deviceLocationY,jdbcType=DOUBLE},
+      device_user_id = #{record.deviceUserId,jdbcType=VARCHAR},
+      device_health = #{record.deviceHealth,jdbcType=INTEGER},
+      state_tmp = #{record.stateTmp,jdbcType=REAL},
+      state_hum = #{record.stateHum,jdbcType=REAL},
+      state_power = #{record.statePower,jdbcType=REAL},
+      state_isfire = #{record.stateIsfire,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fc.test.model.jpa.TDeviceFoundation">
+    update t_device_foundation
+    <set>
+      <if test="stateId != null">
+        state_id = #{stateId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceBelong != null">
+        device_belong = #{deviceBelong,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceLocationX != null">
+        device_location_x = #{deviceLocationX,jdbcType=DOUBLE},
+      </if>
+      <if test="deviceLocationY != null">
+        device_location_y = #{deviceLocationY,jdbcType=DOUBLE},
+      </if>
+      <if test="deviceUserId != null">
+        device_user_id = #{deviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceHealth != null">
+        device_health = #{deviceHealth,jdbcType=INTEGER},
+      </if>
+      <if test="stateTmp != null">
+        state_tmp = #{stateTmp,jdbcType=REAL},
+      </if>
+      <if test="stateHum != null">
+        state_hum = #{stateHum,jdbcType=REAL},
+      </if>
+      <if test="statePower != null">
+        state_power = #{statePower,jdbcType=REAL},
+      </if>
+      <if test="stateIsfire != null">
+        state_isfire = #{stateIsfire,jdbcType=INTEGER},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fc.test.model.jpa.TDeviceFoundation">
+    update t_device_foundation
+    set state_id = #{stateId,jdbcType=VARCHAR},
+      device_belong = #{deviceBelong,jdbcType=VARCHAR},
+      device_location_x = #{deviceLocationX,jdbcType=DOUBLE},
+      device_location_y = #{deviceLocationY,jdbcType=DOUBLE},
+      device_user_id = #{deviceUserId,jdbcType=VARCHAR},
+      device_health = #{deviceHealth,jdbcType=INTEGER},
+      state_tmp = #{stateTmp,jdbcType=REAL},
+      state_hum = #{stateHum,jdbcType=REAL},
+      state_power = #{statePower,jdbcType=REAL},
+      state_isfire = #{stateIsfire,jdbcType=INTEGER}
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </update>
+</mapper>

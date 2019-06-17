@@ -155,3 +155,30 @@ CREATE TABLE `t_sys_user` (
 -- ----------------------------
 INSERT INTO `t_sys_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3');
 INSERT INTO `t_sys_user` VALUES ('488294747442511872', 'fuce', 'e10adc3949ba59abbe56e057f20f883e');
+
+
+DROP TABLE IF EXISTS `t_device_foundation`;
+CREATE TABLE `t_device_foundation` (
+  `device_id` varchar(255) NOT NULL,
+  `state_id` varchar(255) NOT NULL COMMENT '状态id',
+  `device_belong` varchar(255) NOT NULL COMMENT '归属',
+  `device_location_x` double NOT NULL COMMENT 'GPS地点x',
+  `device_location_y` double NOT NULL COMMENT 'GPS地点x',
+  `device_user_id` varchar(255) NOT NULL,
+  `device_health` integer NOT NULL COMMENT'设备健康状态（0：正常，1：停用，2：故障，3：断开连接）',
+  `state_tmp` float  COMMENT '设备温度（传感器）',
+  `state_hum` float  COMMENT '设备湿度（传感器）',
+  `state_power` float  COMMENT '设备电量（传感器）',
+  `state_isfire` integer default 0 COMMENT '是否报警（传感器）',
+  PRIMARY KEY (`device_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备表';
+
+DROP TABLE IF EXISTS `t_device_state`;
+CREATE TABLE `t_device_state` (
+  `state_id` varchar(255) NOT NULL,
+  `state_tmp` float  COMMENT '设备温度（传感器）',
+  `state_hum` float  COMMENT '设备湿度（传感器）',
+  `state_power` float  COMMENT '设备电量（传感器）',
+  `state_isfire` integer default 0 COMMENT '是否报警（传感器）',
+  PRIMARY KEY (`state_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备状态表';
