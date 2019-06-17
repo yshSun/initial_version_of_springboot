@@ -1,0 +1,130 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div  th:fragment="leftMenu">
+	<!-- 左边菜单 -->
+	<div id="skin-select">
+		<!-- PC端 LOGO -->
+	    <div id="logo">
+	      <h1>智慧烟感<span>v1.0</span></h1>
+	    </div>
+	<!--END PC端 LOGO -->
+	
+	<!--点击隐藏左边菜单栏按钮 -->
+	    <a id="toggle">
+	        <span class="entypo-menu"></span>
+	    </a>
+	    <!--END点击隐藏左边菜单栏按钮 -->
+	    <!-- PC端搜索按钮 -->
+	    <div class="dark">
+	        <form action="#">
+	            <span>
+					<input type="text" name="search" value="" class="search rounded id_search" placeholder="菜单搜索" autofocus />
+	            </span>
+	        </form>
+	    </div>
+	<!-- 手机端搜索按钮  有bug-->
+	    <div class="search-hover">
+	        <form id="demo-2">
+	            <input type="search" placeholder="Search4 Menu..." class="id_search">
+	        </form>
+	    </div>
+	
+	
+	
+	<!-- 左侧菜单栏 -->
+	    <div class="skin-part">
+	        <div id="tree-wrap">
+	            <div class="side-bar">
+	                <ul class="topnav menu-left-nest">
+	                    <li>
+	                        <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+	
+	                            <span class="widget-menu"></span>
+	                            <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+	
+	                        </a>
+	                    </li>
+	
+	                    <li>
+	                        <a class="tooltip-tip ajax-load" th:href="@{${rootPath}+'DeviceController/view'}" title="Blog App">
+	                            <i class="icon-document-edit"></i>
+	                            <span>设备管理</span>
+	
+	                        </a>
+	                    </li>
+	                    
+	                    <li>
+	                        <a class="tooltip-tip ajax-load" th:href="@{${rootPath}+'MonitorController/view'}" title="Social">
+	                            <i class="icon-feed"></i>
+	                            <span>监控管理</span>
+	
+	                        </a>
+	                    </li>
+	                    
+	                    <li>
+	                        <a class="tooltip-tip ajax-load" th:href="@{${rootPath}+'OperatorController/view'}" title="Media">
+	                            <i class="icon-camera"></i>
+	                            <span>运维管理</span>
+	
+	                        </a>
+	                    </li>
+	                </ul>
+	
+					
+					<!-- 系统设置 -->
+	                <ul id="menu-showhide" class="topnav menu-left-nest">
+	                    <li>
+	                        <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+	                            <span class="component"></span>
+	                            <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+	                        </a>
+	                    </li>
+	
+	                    <li>
+	                        <a class="tooltip-tip" th:href="@{${rootPath}+'UserController/view'}" title="sysUser">
+	                            <i class="icon icon-user"></i>
+								<span>用户管理</span>
+	                 		</a>
+	                    </li>
+	                    <li>
+	                        <a class="tooltip-tip" th:href="@{${rootPath}+'RoleController/view'}" title="sysUser">
+	                            <i class="icon icon-user-group"></i>
+								<span>角色管理</span>
+	                 		</a>
+	                    </li>
+	                    <li>
+	                        <a class="tooltip-tip" th:href="@{${rootPath}+'PremissionController/view'}" title="sysUser">
+	                            <i class="fa fa-key"></i>
+								<span>权限管理</span>
+	                 		</a>
+	                    </li>
+	                </ul>
+					<!-- 结束系统设置 -->
+	
+	                <div class="side-dash">
+	                    <h3>
+	                        <span>设备</span>
+	                    </h3>
+	                    <ul class="side-dashh-list">
+	                        <li>设备接入数
+	                            <span>25k<i style="color:#44BBC1;" class="fa fa-arrow-circle-up"></i>
+	                            </span>
+	                        </li>
+	                        <li>火警率
+	                            <span>1.6%<i style="color:#AB6DB0;" class="fa fa-arrow-circle-down"></i>
+	                            </span>
+	                        </li>
+	                        <li>覆盖范围
+	                            <span>1300KM<i style="color:#19A1F9;" class="fa fa-arrow-circle-up"></i>
+	                            </span>
+	                        </li>
+	                    </ul>
+
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- 左侧菜单栏 -->
+	</div>
+	<!-- 结束左边菜单栏 -->
+
+</div>
