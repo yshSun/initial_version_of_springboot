@@ -32,13 +32,10 @@ public class UserController extends BaseController{
 	
 	private String prefix = "admin/user";
 	
-	
 	@GetMapping("view")
 	@RequiresPermissions("system:user:view")
-    public String view(Model model)
-    {	
-		
-		setTitle(model, new TitleVo("用户列表", "用户管理", true,"欢迎进入用户页面", true, false));
+    public String view(Model model){	
+		setTitle(model, new TitleVo("用户列表", "用户管理", true, "欢迎进入用户页面", true, false));
         return prefix + "/list";
     }
 	
