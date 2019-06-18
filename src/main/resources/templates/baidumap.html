@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="admin/common/html/head :: head(~{::title},~{::link},~{::style})">
+
+    <title th:text=${title}></title>
+    <!-- 这儿引用单独的css link -->
+
+    <link rel="stylesheet" th:href="@{{path}static/admin/assets/js/button/ladda/ladda.min.css(path=${rootPath})}">
+    <style type="text/css">
+        #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+<!-- 顶部通用-->
+<div th:replace="admin/common/html/topMenu :: topMenu(${isribbon})">
+</div>
+<!-- 结束顶部通用 -->
+
+<!-- 左边菜单栏通用 -->
+<div th:replace="admin/common/html/leftMenu :: leftMenu">
+</div>
+<!-- 结束左边菜单栏通用 -->
+
+
+<!-- ###############################代码编写出############################### -->
+
+<!-- 右边内容 -->
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+        <!-- 内容 -->
+        <!--标题 通用-->
+        <div th:replace="admin/common/html/title :: title(${title},${parenttitle},${isMsg},${msgHTML})">
+        </div>
+        <!-- 结束标题 通用-->
+        <div class="content-wrap">
+            <!-- 结束内容 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- 空白页开始-->
+                    <p id="Demo"></p>
+                    <div>
+                        <button id="heatMapButton" onclick=mapFunctionChange()>显示热力图</button>
+                        <button onclick=loadDoc()>全量更新</button>
+                        <button onclick=mapUpdate()>增量更新</button>
+                        <button onclick=returnCenter()>地图居中</button>
+                    </div>
+                    <div id="allmap"></div>
+                    <script>
+                        document.getElementById("allmap").style.height = window.innerHeight * 0.5 + 'px'
+
+                    </script>
+                    <script>
+                        window.onresize = function () {
+                            document.getElementById("allmap").style.height = window.innerHeight * 0.5 + 'px'
+                        }
+
+
+                    </script>
+                </div>
+                <!-- 空白页结束 -->
+            </div>
+            <!-- 结束内容 -->
+            <!-- 页脚 通用-->
+            <div th:replace="admin/common/html/footer :: footer">
+            </div>
+            <!-- 结束页脚通用 -->
+        </div>
+    </div>
+</div>
+<!-- 结束右边内容 -->
+<!-- ###############################代码编写出############################### -->
+
+
+<!-- 右侧隐藏滑块内容 -->
+<div th:include="admin/common/html/rightHide :: rightHide">
+
+</div>
+<!-- END 右侧隐藏滑块内容-->
+
+<!-- 通用js -->
+<div th:include="admin/common/html/js :: onload_js">
+
+</div>
+<script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=vDM0AnymfUocArv4lG2L39w9LZwOp5oT"></script>
+<script type="text/javascript" src="/static/admin/assets/js/toggle_close.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+
+<script>
+
+    //尝试获取后端数据
+    var map_json;
+    var map_json_update;
+    var heat_map_json;
+    loadDataPoint = setTimeout("loadDoc();", 1000);
+    loadHeatMap = setTimeout("heatMapUpdate();", 1000);
+    refreshPoint = setInterval("mapUpdate();", 5000);
+    refreshHeatMap = setTimeout("heatMapUpdate();", 10000);
+    var heatMapState = 0;
+
+    function returnCenter() {
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+    }
+
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+                openInfo(content, e)
+            }
+        );
+
+    }
+
+    function openInfo(content, e) {
+        var opts = {
+            width: 250,     // 信息窗口宽度
+            height: 80,     // 信息窗口高度
+            title: content[0], // 信息窗口标题
+            enableMessage: true//设置允许信息窗发送短息
+        };
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content[1], opts);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
+    }
+
+    function addMarker(point, label) {
+        var marker = new BMap.Marker(point);
+        marker.setLabel(label);
+        map.addOverlay(marker);
+
+        return marker;
+    }
+
+    // function loadDoc() {
+    //     map_json = null;
+    //     var xhttp = new XMLHttpRequest();
+    //     xhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             map.clearOverlays();
+    //             map_json = JSON.parse(this.responseText);
+    //             document.getElementById("Demo").innerHTML =
+    //                 this.responseText;
+    //             var i = 0;
+    //             for (i in map_json) {
+    //                 var point = new BMap.Point(map_json[i].longitude_, map_json[i].latitude_);
+    //                 var label = new BMap.Label(map_json[i].name, {offset: new BMap.Size(20, -10)});
+    //                 marker = addMarker(point, label);
+    //                 if (map_json[i].int1 == 0) {
+    //                     marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    //
+    //                 }
+    //                 var content = [map_json[i].name, map_json[i].info1];
+    //                 addClickHandler(content, marker)
+    //             }
+    //         }
+    //     }
+    //     xhttp.open("GET", "/mapController/getPoint", true);
+    //     xhttp.send();
+    // }
+
+
+    function loadDoc() {
+        map_json = null;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                map.clearOverlays();
+                map_json = JSON.parse(this.responseText);
+                document.getElementById("Demo").innerHTML =
+                    this.responseText;
+                var i = 0;
+                for (i in map_json) {
+                    var point = new BMap.Point(map_json[i].deviceLocationX, map_json[i].deviceLocationY);
+                    var label = new BMap.Label(map_json[i].deviceId, {offset: new BMap.Size(20, -10)});
+                    marker = addMarker(point, label);
+                    if (map_json[i].stateIsfire == 0) {
+                        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+
+                    }
+                    var content = [map_json[i].deviceId, map_json[i].info1];
+                    addClickHandler(content, marker)
+                }
+            }
+        }
+        xhttp.open("GET", "http://192.168.3.63:8081/DeviceStateController/getallinfo", true);
+        xhttp.send();
+    }
+
+    function getFakeUpdate() {
+        map_json_update = null;
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //map.clearOverlays();
+                map_json_update = JSON.parse(this.responseText);
+            }
+
+        }
+        xhttp.open("GET", "/mapController/getPointUpdate", true);
+        xhttp.send();
+    }
+
+    function mapUpdate() {
+        map_json_update = null;
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //map.clearOverlays();
+                map_json_update = JSON.parse(this.responseText);
+                document.getElementById("Demo").innerHTML =
+                    this.responseText;
+                var i = 0;
+                for (i in map_json_update) {
+                    //console.log("i" + i)
+
+                    var allOverlay = map.getOverlays();
+                    for (var j = 0; j <= allOverlay.length - 1; j++) {
+                        //console.log("j" + j)
+                        if (typeof allOverlay[j].z != "undefined" && allOverlay[j].z != null) {
+                            if (typeof allOverlay[j].z.label != "undefined" && allOverlay[j].z.label != null) {
+                                if (typeof allOverlay[j].z.label.content != "undefined" && allOverlay[j].z.label.content != null) {
+                                    if (map_json_update[i].deviceId === allOverlay[j].z.label.content) {
+                                        //console.log("found");
+                                        //console.log(allOverlay[j]);
+                                        map.removeOverlay(allOverlay[j]);
+                                        //console.log(allOverlay[j]);
+                                        var point = new BMap.Point(map_json_update[i].deviceLocationX, map_json_update[i].deviceLocationY);
+                                        var label = new BMap.Label(map_json_update[i].deviceId, {offset: new BMap.Size(20, -10)});
+                                        //console.log(point, label)
+                                        marker = addMarker(point, label);
+                                        //console.log(map_json_update[i].name);
+
+                                        //console.log("add mark");
+                                        if (map_json_update[i].stateIsfire === 0) {
+                                            marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+
+                                        }
+                                        var content = [map_json_update[i].name, map_json_update[i].info1];
+                                        addClickHandler(content, marker)
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        xhttp.open("GET", "http://192.168.3.63:8081/DeviceStateController/getallinfo", true);
+        xhttp.send();
+
+    }
+
+    // function mapUpdate() {
+    //     map_json_update = null;
+    //     var xhttp = new XMLHttpRequest();
+    //
+    //     xhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             //map.clearOverlays();
+    //             map_json_update = JSON.parse(this.responseText);
+    //             document.getElementById("Demo").innerHTML =
+    //                 this.responseText;
+    //             var i = 0;
+    //             for (i in map_json_update) {
+    //                 //console.log("i" + i)
+    //
+    //                 var allOverlay = map.getOverlays();
+    //                 for (var j = 0; j <= allOverlay.length - 1; j++) {
+    //                     //console.log("j" + j)
+    //                     if (typeof allOverlay[j].z != "undefined" && allOverlay[j].z != null) {
+    //                         if (typeof allOverlay[j].z.label != "undefined" && allOverlay[j].z.label != null) {
+    //                             if (typeof allOverlay[j].z.label.content != "undefined" && allOverlay[j].z.label.content != null) {
+    //                                 if (map_json_update[i].name === allOverlay[j].z.label.content) {
+    //                                     //console.log("found");
+    //                                     //console.log(allOverlay[j]);
+    //                                     map.removeOverlay(allOverlay[j]);
+    //                                     //console.log(allOverlay[j]);
+    //                                     var point = new BMap.Point(map_json_update[i].longitude_, map_json_update[i].latitude_);
+    //                                     var label = new BMap.Label(map_json_update[i].name, {offset: new BMap.Size(20, -10)});
+    //                                     //console.log(point, label)
+    //                                     marker = addMarker(point, label);
+    //                                     //console.log(map_json_update[i].name);
+    //
+    //                                     //console.log("add mark");
+    //                                     if (map_json_update[i].int1 === 0) {
+    //                                         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    //
+    //                                     }
+    //                                     var content = [map_json_update[i].name, map_json_update[i].info1];
+    //                                     addClickHandler(content, marker)
+    //
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //
+    //
+    //     xhttp.open("GET", "/mapController/getPointUpdate", true);
+    //     xhttp.send();
+    //
+    // }
+
+    function mapFunctionChange() {
+        if (heatMapState == 0) {
+            heatmapOverlay.show();
+            document.getElementById("heatMapButton").innerText = "关闭热力图"
+            heatMapState = 1
+        } else {
+            heatmapOverlay.hide();
+            document.getElementById("heatMapButton").innerText = "显示热力图"
+            heatMapState = 0
+        }
+    }
+
+    function heatMapUpdate() {
+        heat_map_json = null;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                heat_map_json = JSON.parse(this.responseText)
+                heatmapOverlay = new BMapLib.HeatmapOverlay({"radius": 20});
+                map.addOverlay(heatmapOverlay);
+                heatmapOverlay.setDataSet({data: heat_map_json, max: 2000});
+            }
+
+        }
+        xhttp.open("GET", "/mapController/getHeatMapPoint", true);
+        xhttp.send();
+    }
+</script>
+
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(112.714892, 38.464839);
+
+    map.centerAndZoom(point, 12);
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+    //heatMapUpdate();
+
+
+</script>
+
+</body>
+
+
+</html>
