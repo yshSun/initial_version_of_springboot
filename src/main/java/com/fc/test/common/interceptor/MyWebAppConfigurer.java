@@ -23,6 +23,8 @@ public class MyWebAppConfigurer  extends  WebMvcConfigurationSupport  {
 	/** 解决跨域问题 **/
 	@Override
 	public void addCorsMappings(CorsRegistry registry){
+		registry.addMapping("/DeviceStateController/**").
+				allowedMethods("GET").allowedOrigins("http://localhost:8081").allowCredentials(false).maxAge(3600);
 		//super.addCorsMappings(registry);
 	}
 	
@@ -58,6 +60,7 @@ public class MyWebAppConfigurer  extends  WebMvcConfigurationSupport  {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//        registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
 
     }
 	/** 默认静态资源处理器 **/

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan(value = "com.fc.test.mapper")
 public class SpringbootSwagger2Application {
-
+    //
     public static void main(String[] args) {
 
         SpringApplication.run(SpringbootSwagger2Application.class, args);
@@ -15,4 +15,6 @@ public class SpringbootSwagger2Application {
         System.out.println("=============启动成功===============");
         System.out.println("=================================");
     }
+
+
 }

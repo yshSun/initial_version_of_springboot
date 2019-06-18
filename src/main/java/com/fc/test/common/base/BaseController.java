@@ -3,6 +3,7 @@ package com.fc.test.common.base;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.fc.test.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,12 @@ public class BaseController
 	//权限
 	@Autowired
 	public SysPremissionService sysPremissionService;
+
+	//设备
+	@Autowired
+	public DeviceService deviceService;
+
+
 	
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型

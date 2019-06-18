@@ -155,3 +155,52 @@ CREATE TABLE `t_sys_user` (
 -- ----------------------------
 INSERT INTO `t_sys_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3');
 INSERT INTO `t_sys_user` VALUES ('488294747442511872', 'fuce', 'e10adc3949ba59abbe56e057f20f883e');
+
+
+DROP TABLE IF EXISTS `t_device_foundation`;
+CREATE TABLE `t_device_foundation` (
+  `device_id` varchar(255) NOT NULL,
+  `state_id` varchar(255) NOT NULL COMMENT '状态id',
+  `device_belong` varchar(255) NOT NULL COMMENT '归属',
+  `device_location_x` double NOT NULL COMMENT 'GPS地点x',
+  `device_location_y` double NOT NULL COMMENT 'GPS地点x',
+  `device_user_id` varchar(255) NOT NULL,
+  `device_health` integer NOT NULL COMMENT'设备健康状态（0：正常，1：停用，2：故障，3：断开连接）',
+  `state_tmp` float  COMMENT '设备温度（传感器）',
+  `state_hum` float  COMMENT '设备湿度（传感器）',
+  `state_power` float  COMMENT '设备电量（传感器）',
+  `state_isfire` integer default 0 COMMENT '是否报警（传感器）',
+  PRIMARY KEY (`device_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备表';
+
+DROP TABLE IF EXISTS `t_device_state`;
+CREATE TABLE `t_device_state` (
+  `state_id` varchar(255) NOT NULL,
+  `state_tmp` float  COMMENT '设备温度（传感器）',
+  `state_hum` float  COMMENT '设备湿度（传感器）',
+  `state_power` float  COMMENT '设备电量（传感器）',
+  `state_isfire` integer default 0 COMMENT '是否报警（传感器）',
+  PRIMARY KEY (`state_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备状态表';
+
+
+
+INSERT INTO `t_device_foundation` VALUES ('1','2','顿村','112.706268','38.504663','1','0','25.8','31.1','100','0')
+USE iot
+DROP TABLE IF EXISTS `t_device_foundation`;
+CREATE TABLE `t_device_foundation` (
+  `device_id` VARCHAR(255) NOT NULL,#service
+  `state_id` VARCHAR(255) NOT NULL COMMENT '——状态id',#前端
+  `device_belong` VARCHAR(255) NOT NULL COMMENT '--归属',#前端
+  `device_location_x` DOUBLE NOT NULL COMMENT '--GPS地点x',#前端
+  `device_location_y` DOUBLE NOT NULL COMMENT '--GPS地点x',#前端
+  `device_user_id` VARCHAR(255) NOT NULL , #service
+  `device_health` INTEGER NOT NULL COMMENT'设备健康状态（0：正常，1：停用，2：故障，3：断开连接）',#service
+  `state_tmp` FLOAT  COMMENT '设备温度（传感器）',#service
+  `state_hum` FLOAT  COMMENT '设备湿度（传感器）',#service
+  `state_power` FLOAT  COMMENT '设备电量（传感器）',#service
+  `state_isfire` INTEGER DEFAULT 0 COMMENT '是否报警（传感器）',#service
+  PRIMARY KEY (`device_id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备表';
+
+INSERT INTO `t_device_foundation` VALUES ('1','2','顿村','112.706268','38.504663','1','0','25.8','31.1','100','0')

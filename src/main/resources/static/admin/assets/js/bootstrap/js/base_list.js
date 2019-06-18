@@ -140,6 +140,7 @@
                 var url = $.table._option.updateUrl.replace("{id}", id);
                 $.modal.open("修改" + $.table._option.modalName, url)
             },
+
 			remove:function(id){
 				$.modal.confirm("确定删除该条" +$.table._option.modalName+ "信息吗？", function() {
                     var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
@@ -149,6 +150,8 @@
                     $.operate.submit(url, "post", "json", data)
                 })
 			},
+
+
 			batRemove: function() {
                 var rows = $.common.isEmpty($.table._option.id) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.id);
                 if (rows.length == 0) {
@@ -163,6 +166,9 @@
                     $.operate.submit(url, "post", "json", data)
                 })
             },
+
+
+
 			ajaxSuccess: function(result) {
                 if (result.code == web_status.SUCCESS) {
                     $.modal.msgSuccess(result.msg);
@@ -328,6 +334,14 @@
             },
             reload: function() {
                 parent.location.reload()
+            },
+            openmap: function () {
+
+                if (document.getElementById('allmap').style.display == 'none') {
+                    document.getElementById('allmap').style.display = 'block';
+                } else {
+                    document.getElementById('allmap').style.display = 'none';
+                }
             }
         },
         common: {
@@ -377,7 +391,7 @@
                 return selects
             }
         }
-        
+
 	});
 	
 })(jQuery);

@@ -32,6 +32,8 @@ spring :
     prefix: classpath:/templates/
     suffix: .html
 
+
+
 mybatis :
   mapperLocations : classpath*:mybatis/*/*.xml
   executor-type : reuse
@@ -45,3 +47,7 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+
+
+
