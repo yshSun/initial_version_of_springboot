@@ -1,6 +1,8 @@
 package com.fc.test.model.jpa;
 
-public class TDeviceFoundation {
+import java.io.Serializable;
+
+public class TDeviceFoundation implements Serializable {
     private String deviceId;
 
     private String stateId;

@@ -182,3 +182,25 @@ CREATE TABLE `t_device_state` (
   `state_isfire` integer default 0 COMMENT '是否报警（传感器）',
   PRIMARY KEY (`state_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备状态表';
+
+
+
+INSERT INTO `t_device_foundation` VALUES ('1','2','顿村','112.706268','38.504663','1','0','25.8','31.1','100','0')
+USE iot
+DROP TABLE IF EXISTS `t_device_foundation`;
+CREATE TABLE `t_device_foundation` (
+  `device_id` VARCHAR(255) NOT NULL,#service
+  `state_id` VARCHAR(255) NOT NULL COMMENT '——状态id',#前端
+  `device_belong` VARCHAR(255) NOT NULL COMMENT '--归属',#前端
+  `device_location_x` DOUBLE NOT NULL COMMENT '--GPS地点x',#前端
+  `device_location_y` DOUBLE NOT NULL COMMENT '--GPS地点x',#前端
+  `device_user_id` VARCHAR(255) NOT NULL , #service
+  `device_health` INTEGER NOT NULL COMMENT'设备健康状态（0：正常，1：停用，2：故障，3：断开连接）',#service
+  `state_tmp` FLOAT  COMMENT '设备温度（传感器）',#service
+  `state_hum` FLOAT  COMMENT '设备湿度（传感器）',#service
+  `state_power` FLOAT  COMMENT '设备电量（传感器）',#service
+  `state_isfire` INTEGER DEFAULT 0 COMMENT '是否报警（传感器）',#service
+  PRIMARY KEY (`device_id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备表';
+
+INSERT INTO `t_device_foundation` VALUES ('1','2','顿村','112.706268','38.504663','1','0','25.8','31.1','100','0')
