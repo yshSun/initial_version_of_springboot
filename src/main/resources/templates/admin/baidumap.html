@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <!-- 空白页开始-->
-                    <p id="Demo"></p>
+
                     <div>
                         <button id="heatMapButton" onclick=mapFunctionChange()>显示热力图</button>
                         <button onclick=loadDoc()>全量更新</button>
@@ -56,6 +56,7 @@
                         <button onclick=returnCenter()>地图居中</button>
                     </div>
                     <div id="allmap"></div>
+                    <p id="Demo"></p>
                     <script>
                         document.getElementById("allmap").style.height = window.innerHeight * 0.5 + 'px'
 
@@ -110,7 +111,7 @@
     var heatMapState = 0;
 
     function returnCenter() {
-        map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+        map.centerAndZoom(new BMap.Point(112.714892, 38.464839), 12);
     }
 
     function addClickHandler(content, marker) {
@@ -184,7 +185,7 @@
                     var point = new BMap.Point(map_json[i].deviceLocationX, map_json[i].deviceLocationY);
                     var label = new BMap.Label(map_json[i].deviceId, {offset: new BMap.Size(20, -10)});
                     marker = addMarker(point, label);
-                    if (map_json[i].stateIsfire == 0) {
+                    if (map_json[i].stateIsfire == 1) {
                         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
                     }
@@ -244,7 +245,7 @@
                                         //console.log(map_json_update[i].name);
 
                                         //console.log("add mark");
-                                        if (map_json_update[i].stateIsfire === 0) {
+                                        if (map_json_update[i].stateIsfire === 1) {
                                             marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
                                         }
