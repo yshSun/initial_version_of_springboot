@@ -56,10 +56,12 @@ public class mapControllerMain extends BaseController {
     @ResponseBody
     public List<heatMapPoint> get_heat_map_point(Model model) {
         Map<String, Double> heatMapConfig = new HashMap<String, Double>();
-        heatMapConfig.put("sw_lng", 116.356641);
-        heatMapConfig.put("sw_lat", 39.889815);
-        heatMapConfig.put("ne_lng", 116.451359);
-        heatMapConfig.put("ne_lat", 39.940176);
+        //112.625781,38.453245
+        heatMapConfig.put("sw_lng", 112.625781);
+        heatMapConfig.put("sw_lat", 38.453245);
+        //112.768935,38.507703
+        heatMapConfig.put("ne_lng", 112.768935);
+        heatMapConfig.put("ne_lat", 38.507703);
         heatMapConfig.put("lngSPen", Math.abs(heatMapConfig.get("sw_lng") - heatMapConfig.get("ne_lng")));
         heatMapConfig.put("latSPen", Math.abs(heatMapConfig.get("sw_lat") - heatMapConfig.get("ne_lat")));
 
