@@ -21,7 +21,7 @@ public class mapControllerMain extends BaseController {
     @GetMapping("view")
     public String mapMain(Model model) {
         System.out.println("mapController");
-        setTitle(model, new TitleVo("Map", "map", true, "welcome to map", false, false));
+        setTitle(model, new TitleVo("欢迎登陆", "BaiduMap()", true, "你好，智慧烟感!", false, false));
         return "admin/baidumap";
     }
 
@@ -66,11 +66,11 @@ public class mapControllerMain extends BaseController {
         heatMapConfig.put("latSPen", Math.abs(heatMapConfig.get("sw_lat") - heatMapConfig.get("ne_lat")));
 
         List<heatMapPoint> heatMapPoints = new ArrayList<>();
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 200; i++) {
             heatMapPoints.add(new heatMapPoint(
-                    heatMapConfig.get("sw_lng") + heatMapConfig.get("lngSPen") * (Math.random() * 5),
-                    heatMapConfig.get("ne_lat") - heatMapConfig.get("latSPen") * (Math.random() * 5),
-                    (float) Math.random() * 20 + (float) 20.0));
+                    heatMapConfig.get("sw_lng") + heatMapConfig.get("lngSPen") * (Math.random() * 0.7),
+                    heatMapConfig.get("ne_lat") - heatMapConfig.get("latSPen") * (Math.random() * 0.7),
+                    (float) Math.random() * 100 + (float) 20.0));
         }
         System.out.println(heatMapPoints);
         return heatMapPoints;

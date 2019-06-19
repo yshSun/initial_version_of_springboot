@@ -105,9 +105,9 @@
     var map_json_update;
     var heat_map_json;
     loadDataPoint = setTimeout("loadDoc();", 1000);
-    loadHeatMap = setTimeout("heatMapUpdate();", 1000);
+    //loadHeatMap = setTimeout("heatMapUpdate();", 1000);
     refreshPoint = setInterval("mapUpdate();", 5000);
-    refreshHeatMap = setTimeout("heatMapUpdate();", 10000);
+    //refreshHeatMap = setTimeout("heatMapUpdate();", 10000);
     var heatMapState = 0;
 
     function returnCenter() {
@@ -175,7 +175,7 @@
         map_json = null;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 map.clearOverlays();
                 map_json = JSON.parse(this.responseText);
                 document.getElementById("Demo").innerHTML =
@@ -185,7 +185,7 @@
                     var point = new BMap.Point(map_json[i].deviceLocationX, map_json[i].deviceLocationY);
                     var label = new BMap.Label(map_json[i].deviceId, {offset: new BMap.Size(20, -10)});
                     marker = addMarker(point, label);
-                    if (map_json[i].stateIsfire == 1) {
+                    if (map_json[i].stateIsfire === 1) {
                         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
                     }
@@ -323,11 +323,15 @@
 
     function mapFunctionChange() {
         if (heatMapState == 0) {
-            heatmapOverlay.show();
+            heatmapOverlay_ = heatMapUpdate();
+            heatmapOverlay_.show();
+
             document.getElementById("heatMapButton").innerText = "关闭热力图"
             heatMapState = 1
         } else {
-            heatmapOverlay.hide();
+            heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
+            map.addOverlay(heatmapOverlay_);
+            heatmapOverlay_.hide();
             document.getElementById("heatMapButton").innerText = "显示热力图"
             heatMapState = 0
         }
@@ -339,9 +343,10 @@
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 heat_map_json = JSON.parse(this.responseText)
-                heatmapOverlay = new BMapLib.HeatmapOverlay({"radius": 20});
-                map.addOverlay(heatmapOverlay);
-                heatmapOverlay.setDataSet({data: heat_map_json, max: 2000});
+                heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
+                map.addOverlay(heatmapOverlay_);
+                heatmapOverlay_.setDataSet({data: heat_map_json, max: 2000});
+                return heatmapOverlay_
             }
 
         }
