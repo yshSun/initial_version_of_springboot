@@ -2,7 +2,7 @@
 spring :
   datasource :
       driverClassName : com.mysql.cj.jdbc.Driver
-      url : jdbc:mysql://192.168.3.63:33060/iot?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+      url : jdbc:mysql://192.168.3.63:33060/iot?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
       username : root
       password : admin123456
       hikari:

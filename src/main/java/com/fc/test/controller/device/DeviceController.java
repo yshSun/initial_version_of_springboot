@@ -136,8 +136,37 @@ public class DeviceController extends BaseController {
         return toAjax(deviceService.updateDeviceInfo(tDeviceFoundation));
     }
 
+	/**
+	 * 修改设备火警状态
+	 * @param id
+	 *
+	 * @return
+	 */
+	@GetMapping("/setfireon/{id}")
+	public AjaxResult setfireon(@PathVariable("id") String id)
+	{	//查询所有角色
+		if(deviceService.getFirestate(id)==0)
+			return toAjax(deviceService.updateFirestate(id,1));
+		else
+			return toAjax(0);
 
-    
+	}
+
+	/**
+	 * 修改设备火警状态
+	 * @param id
+	 *
+	 * @return
+	 */
+	@GetMapping("/setfireoff/{id}")
+	public AjaxResult setfireoff(@PathVariable("id") String id)
+	{	//查询所有角色
+		if(deviceService.getFirestate(id)==1)
+			return toAjax(deviceService.updateFirestate(id,0));
+		else
+			return toAjax(0);
+
+	}
 
 
 	
