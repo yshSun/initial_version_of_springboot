@@ -1,7 +1,9 @@
 package com.fc.test.model.workorder;
 
-import java.util.Date;
+import lombok.ToString;
 
+import java.util.Date;
+@ToString
 public class NotificationLogEntity {
     /**
      *
@@ -55,7 +57,7 @@ public class NotificationLogEntity {
      *
      * @mbg.generated
      */
-    private String notifyState;
+    private Byte notifyState;
 
     /**
      *
@@ -194,7 +196,7 @@ public class NotificationLogEntity {
      *
      * @mbg.generated
      */
-    public String getNotifyState() {
+    public Byte getNotifyState() {
         return notifyState;
     }
 
@@ -206,8 +208,8 @@ public class NotificationLogEntity {
      *
      * @mbg.generated
      */
-    public void setNotifyState(String notifyState) {
-        this.notifyState = notifyState == null ? null : notifyState.trim();
+    public void setNotifyState(Byte notifyState) {
+        this.notifyState = notifyState;
     }
 
     /**
