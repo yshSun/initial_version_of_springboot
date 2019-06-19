@@ -1,8 +1,9 @@
 package com.fc;
 
-import com.fc.test.model.workorder.AlarmWorkOrderEntity;
-import com.fc.test.model.workorder.NotificationLogEntity;
-import com.fc.test.service.WorkOrderService;
+
+import com.fc.test.model.workorder.AlarmworkOrder;
+import com.fc.test.model.workorder.NotificationLog;
+import com.fc.test.service.AlarmWorkOrderServer;
 import com.fc.test.util.NotifyPushUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,21 +27,24 @@ public class ApplicationTest {
     @Autowired
     private NotifyPushUtil notifyPushUtil;
     @Autowired
-    private WorkOrderService workOrderService;
+    private AlarmWorkOrderServer workOrderService;
 
     @Test
     public void contextLoads() {
 
-        List<AlarmWorkOrderEntity> alarmWorkOrderEntityList = workOrderService.getAllOrder();
-        for (AlarmWorkOrderEntity alarmWorkOrderEntity : alarmWorkOrderEntityList) {
+
+/*        List<AlarmworkOrder> alarmWorkOrderEntityList = workOrderService.getAllOrder();
+        for (AlarmworkOrder alarmWorkOrderEntity : alarmWorkOrderEntityList) {
             System.out.println(alarmWorkOrderEntity.toString());
         }
 
-        List<NotificationLogEntity> notificationLogEntities = workOrderService.getPushLog();
-        for (NotificationLogEntity notificationLogEntity : notificationLogEntities) {
+        List<NotificationLog> notificationLogEntities = workOrderService.getPushLog();
+        for (NotificationLog notificationLogEntity : notificationLogEntities) {
             System.out.println(notificationLogEntity.toString());
         }
-        workOrderService.markOrder(2, 2);
+        workOrderService.markOrder(2, 2);*/
+        System.out.println(new Date());
+
     }
 
 }
