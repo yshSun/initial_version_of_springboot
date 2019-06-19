@@ -97,18 +97,35 @@
         src="http://api.map.baidu.com/api?v=2.0&ak=vDM0AnymfUocArv4lG2L39w9LZwOp5oT"></script>
 <script type="text/javascript" src="/static/admin/assets/js/toggle_close.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(112.714892, 38.464839);
 
+    map.centerAndZoom(point, 12);
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+    heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
+
+
+
+
+    //heatMapUpdate();
+
+
+</script>
 <script>
 
     //尝试获取后端数据
     var map_json;
     var map_json_update;
     var heat_map_json;
+    var heatmapOverlay_;
     loadDataPoint = setTimeout("loadDoc();", 1000);
-    //loadHeatMap = setTimeout("heatMapUpdate();", 1000);
+    //loadHeatMap = setTimeout("heatMapUpdate();", 3000);
     refreshPoint = setInterval("mapUpdate();", 5000);
-    //refreshHeatMap = setTimeout("heatMapUpdate();", 10000);
-    var heatMapState = 0;
+    refreshHeatMap = setInterval("heatMapUpdate();", 10000);
+    var heatMapState = 0; //1显示 0 关闭
 
     function returnCenter() {
         map.centerAndZoom(new BMap.Point(112.714892, 38.464839), 12);
@@ -193,6 +210,9 @@
                     addClickHandler(content, marker)
                 }
             }
+            map.addOverlay(heatmapOverlay_);
+            heatMapUpdate();
+            heatmapOverlay_.hide();
         }
         xhttp.open("GET", "/DeviceStateController/getallinfo", true);
         xhttp.send();
@@ -323,14 +343,13 @@
 
     function mapFunctionChange() {
         if (heatMapState == 0) {
-            heatmapOverlay_ = heatMapUpdate();
+            heatMapUpdate();
             heatmapOverlay_.show();
 
             document.getElementById("heatMapButton").innerText = "关闭热力图"
             heatMapState = 1
         } else {
-            heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
-            map.addOverlay(heatmapOverlay_);
+
             heatmapOverlay_.hide();
             document.getElementById("heatMapButton").innerText = "显示热力图"
             heatMapState = 0
@@ -342,11 +361,11 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
+                console.log("1")
                 heat_map_json = JSON.parse(this.responseText)
-                heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
-                map.addOverlay(heatmapOverlay_);
+                console.log("2")
                 heatmapOverlay_.setDataSet({data: heat_map_json, max: 2000});
-                return heatmapOverlay_
+                console.log("3")
             }
 
         }
@@ -356,19 +375,7 @@
 </script>
 
 
-<script type="text/javascript">
-    // 百度地图API功能
-    var map = new BMap.Map("allmap");
-    var point = new BMap.Point(112.714892, 38.464839);
 
-    map.centerAndZoom(point, 12);
-    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
-
-    //heatMapUpdate();
-
-
-</script>
 
 </body>
 
