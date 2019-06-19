@@ -5,7 +5,7 @@ function alreadywork(id) {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : rootPath + "/OperatorController/alreadwork",
+		url : rootPath + "/OperatorController/alreadywork",
 		data : dataFormJson,
 		async : false,
 		error : function(request) {

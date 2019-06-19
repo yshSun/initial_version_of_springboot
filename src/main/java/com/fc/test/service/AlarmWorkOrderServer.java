@@ -98,7 +98,8 @@ public class AlarmWorkOrderServer implements BaseService<AlarmworkOrder,Alarmwor
 
 
 
-    private String toAddress = "314994347@qq.com";
+    //private String toAddress = "314994347@qq.com";
+    private String toAddress = "lyhong337@163.com";
     private String fromAddress = "18551051565@163.com";
 
     //预警生成工单，为指定设备Id生成工单、发送邮件报警

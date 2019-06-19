@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" 
       xmlns:sec="http://www.pollix.at/thymeleaf/shiro">
 <head th:replace="admin/common/html/head :: head(~{::title},~{::link},~{::style})">
 
-    <title th:text=${title}></title>
+<title th:text=${title}></title>
+<!-- 这儿引用单独的css link -->
+<link rel="stylesheet" th:href="@{{path}static/admin/assets/js/button/ladda/ladda.min.css(path=${rootPath})}">
+<style type="text/css">
+/**
+*这里写单独的css样式
+*/
+</style>
 
-    <!-- 这儿引用单独的css link -->
-    <link rel="stylesheet" th:href="@{{path}static/admin/assets/js/button/ladda/ladda.min.css(path=${rootPath})}">
-
-    <style type="text/css">
-        /**
-        *这里写单独的css样式
-        */
-    </style>
 </head>
 
 <body>
@@ -21,7 +20,7 @@
 <div th:replace="admin/common/html/topMenu :: topMenu(${isribbon})">
 </div>
 <!-- 结束顶部通用 -->
-
+   
 <!-- 左边菜单栏通用 -->
 <div th:replace="admin/common/html/leftMenu :: leftMenu">
 </div>
@@ -45,7 +44,24 @@
             <div class="row">
                 <div class="col-sm-12">
                     <!-- 空白页开始-->
-                    <div th:replace="admin/common/html/indexContent :: indexContent "></div>
+                    <div class="nest" id="Blank_PageClose">
+                        <div class="title-alt">
+                            <h6>Blank Page</h6>
+                            <div class="titleClose">
+                                <a class="gone" href="#Blank_PageClose">
+                                    <span class="entypo-cancel"></span>
+                                </a>
+                            </div>
+                            <div class="titleToggle">
+                                <a class="nav-toggle-alt" href="#Blank_Page_Content">
+                                    <span class="entypo-up-open"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="body-nest" id="Blank_Page_Content">
+                            Content Goes Here
+                        </div>
+                    </div>
                 </div>
                 <!-- 空白页结束 -->
             </div>
@@ -68,17 +84,16 @@
 
 <!-- 右侧隐藏滑块内容 -->
 <div th:include="admin/common/html/rightHide :: rightHide">
-
+    
 </div>
-<!-- END 右侧隐藏滑块内容-->
+   <!-- END 右侧隐藏滑块内容-->
 
 <!-- 通用js -->
 <div th:include="admin/common/html/js :: onload_js">
-
+   
 </div>
-
+    
 <script type="text/javascript" src="/static/admin/assets/js/toggle_close.js"></script>
-
 
 </body>
 
