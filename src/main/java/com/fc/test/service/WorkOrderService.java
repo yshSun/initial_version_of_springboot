@@ -4,7 +4,9 @@ import cn.hutool.core.lang.Snowflake;
 import com.fc.test.mapper.workorder.AlarmWorkOrderEntityMapper;
 import com.fc.test.mapper.workorder.NotificationLogEntityMapper;
 import com.fc.test.model.workorder.AlarmWorkOrderEntity;
+import com.fc.test.model.workorder.AlarmWorkOrderEntityExample;
 import com.fc.test.model.workorder.NotificationLogEntity;
+import com.fc.test.model.workorder.NotificationLogEntityExample;
 import com.fc.test.util.NotifyPushUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,18 +69,24 @@ public class WorkOrderService {
 
     //获取所有工单
     public List<AlarmWorkOrderEntity> getAllOrder() {
-
-        return null;
+        AlarmWorkOrderEntityExample entityExample = new AlarmWorkOrderEntityExample();
+        return alarmWorkOrderEntityMapper.selectByExample(entityExample);
     }
 
     //标记工单状态
-    public void markOrder(String orderId, int newState) {
-
+    public void markOrder(int orderId, int newState) {
+        AlarmWorkOrderEntityExample entityExample = new AlarmWorkOrderEntityExample();
+        entityExample.createCriteria().andOrderIdEqualTo(orderId);
+        AlarmWorkOrderEntity alarmWorkOrderEntity = new AlarmWorkOrderEntity();
+        alarmWorkOrderEntity.setOrderId(orderId);
+        alarmWorkOrderEntity.setWorkingState((byte) newState);
+        alarmWorkOrderEntity.setOrderFinishTime(new Date());
+        alarmWorkOrderEntityMapper.updateByExampleSelective(alarmWorkOrderEntity, entityExample);
     }
 
     //邮件推动历史
     public List<NotificationLogEntity> getPushLog() {
-        return null;
+        return NotificationLogEntityMapper.selectByExample(new NotificationLogEntityExample());
     }
 
 

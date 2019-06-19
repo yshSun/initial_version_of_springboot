@@ -1,5 +1,7 @@
 package com.fc;
 
+import com.fc.test.model.workorder.AlarmWorkOrderEntity;
+import com.fc.test.model.workorder.NotificationLogEntity;
 import com.fc.test.service.WorkOrderService;
 import com.fc.test.util.NotifyPushUtil;
 import org.junit.Test;
@@ -7,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * @ClassName com.fc.ApplicationTest
@@ -25,10 +29,17 @@ public class ApplicationTest {
 
     @Test
     public void contextLoads() {
-        // mqttPushClient.publish("test", "hello");
-//        NotifyPushUtil notifyPushUtil = new NotifyPushUtil();
-        workOrderService.createOrder("10010");
-        //notifyPushUtil.pushByMail("测试邮件", "good", "573262265@qq.com", "18551051565@163.com");
+
+        List<AlarmWorkOrderEntity> alarmWorkOrderEntityList = workOrderService.getAllOrder();
+        for (AlarmWorkOrderEntity alarmWorkOrderEntity : alarmWorkOrderEntityList) {
+            System.out.println(alarmWorkOrderEntity.toString());
+        }
+
+        List<NotificationLogEntity> notificationLogEntities = workOrderService.getPushLog();
+        for (NotificationLogEntity notificationLogEntity : notificationLogEntities) {
+            System.out.println(notificationLogEntity.toString());
+        }
+        workOrderService.markOrder(2, 2);
     }
 
 }
