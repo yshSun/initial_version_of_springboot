@@ -138,6 +138,7 @@
 <script th:src="@{{path}static/admin/assets/js/layer/layer.js(path=${rootPath})}" type="text/javascript"></script>
 <!-- 遮罩层 -->
 <script th:src="@{{path}static/admin/assets/js/blockUI/jquery.blockUI.js(path=${rootPath})}" type="text/javascript"></script>
+<script th:src="@{{path}static/admin/device/js/workorder-changefirestate.js(path=${rootPath})}" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -199,7 +200,7 @@ var exportUrl=window.rootPath+"/OperatorController/export";
   };
 
 $(function(){
-	var oTab=$.table.oTableInitworkorder(options);
+	var oTab=$.table.oTableInitworkorderdo(options);
 	oTab.Init();
 })
 </script>

@@ -7,7 +7,7 @@
     <result column="notify_type" jdbcType="TINYINT" property="notifyType" />
     <result column="payload" jdbcType="VARCHAR" property="payload" />
     <result column="notify_address" jdbcType="VARCHAR" property="notifyAddress" />
-    <result column="notify_state" jdbcType="VARCHAR" property="notifyState" />
+    <result column="notify_state" jdbcType="TINYINT" property="notifyState" />
     <result column="push_time" jdbcType="TIMESTAMP" property="pushTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -106,7 +106,7 @@
       payload, notify_address, notify_state, 
       push_time)
     values (#{notificationId,jdbcType=BIGINT}, #{orderId,jdbcType=INTEGER}, #{notifyType,jdbcType=TINYINT}, 
-      #{payload,jdbcType=VARCHAR}, #{notifyAddress,jdbcType=VARCHAR}, #{notifyState,jdbcType=VARCHAR}, 
+      #{payload,jdbcType=VARCHAR}, #{notifyAddress,jdbcType=VARCHAR}, #{notifyState,jdbcType=TINYINT}, 
       #{pushTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.fc.test.model.workorder.NotificationLog">
@@ -151,7 +151,7 @@
         #{notifyAddress,jdbcType=VARCHAR},
       </if>
       <if test="notifyState != null">
-        #{notifyState,jdbcType=VARCHAR},
+        #{notifyState,jdbcType=TINYINT},
       </if>
       <if test="pushTime != null">
         #{pushTime,jdbcType=TIMESTAMP},
@@ -183,7 +183,7 @@
         notify_address = #{record.notifyAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.notifyState != null">
-        notify_state = #{record.notifyState,jdbcType=VARCHAR},
+        notify_state = #{record.notifyState,jdbcType=TINYINT},
       </if>
       <if test="record.pushTime != null">
         push_time = #{record.pushTime,jdbcType=TIMESTAMP},
@@ -200,7 +200,7 @@
       notify_type = #{record.notifyType,jdbcType=TINYINT},
       payload = #{record.payload,jdbcType=VARCHAR},
       notify_address = #{record.notifyAddress,jdbcType=VARCHAR},
-      notify_state = #{record.notifyState,jdbcType=VARCHAR},
+      notify_state = #{record.notifyState,jdbcType=TINYINT},
       push_time = #{record.pushTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -222,7 +222,7 @@
         notify_address = #{notifyAddress,jdbcType=VARCHAR},
       </if>
       <if test="notifyState != null">
-        notify_state = #{notifyState,jdbcType=VARCHAR},
+        notify_state = #{notifyState,jdbcType=TINYINT},
       </if>
       <if test="pushTime != null">
         push_time = #{pushTime,jdbcType=TIMESTAMP},
@@ -236,7 +236,7 @@
       notify_type = #{notifyType,jdbcType=TINYINT},
       payload = #{payload,jdbcType=VARCHAR},
       notify_address = #{notifyAddress,jdbcType=VARCHAR},
-      notify_state = #{notifyState,jdbcType=VARCHAR},
+      notify_state = #{notifyState,jdbcType=TINYINT},
       push_time = #{pushTime,jdbcType=TIMESTAMP}
     where notification_id = #{notificationId,jdbcType=BIGINT}
   </update>

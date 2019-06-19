@@ -1,8 +1,9 @@
 package com.fc.test.model.workorder;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class NotificationLog {
+public class NotificationLog implements Serializable {
     private Long notificationId;
 
     private Integer orderId;
@@ -13,7 +14,7 @@ public class NotificationLog {
 
     private String notifyAddress;
 
-    private String notifyState;
+    private Byte notifyState;
 
     private Date pushTime;
 
@@ -57,12 +58,12 @@ public class NotificationLog {
         this.notifyAddress = notifyAddress == null ? null : notifyAddress.trim();
     }
 
-    public String getNotifyState() {
+    public Byte getNotifyState() {
         return notifyState;
     }
 
-    public void setNotifyState(String notifyState) {
-        this.notifyState = notifyState == null ? null : notifyState.trim();
+    public void setNotifyState(Byte notifyState) {
+        this.notifyState = notifyState;
     }
 
     public Date getPushTime() {

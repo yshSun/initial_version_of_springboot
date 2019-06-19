@@ -138,6 +138,7 @@
 <script th:src="@{{path}static/admin/assets/js/layer/layer.js(path=${rootPath})}" type="text/javascript"></script>
 <!-- 遮罩层 -->
 <script th:src="@{{path}static/admin/assets/js/blockUI/jquery.blockUI.js(path=${rootPath})}" type="text/javascript"></script>
+<script th:src="@{{path}static/admin/jobcontact/js/workorder-changefirestate.js(path=${rootPath})}" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -195,11 +196,25 @@ var exportUrl=window.rootPath+"/OperatorController/export";
 			    field: 'orderFinishTime',
 			    title: '工单结束时间',
 
-           }]
+           },
+
+
+           {
+			    title: '操作',
+			    formatter: function (value, row, index) {
+			        var id = row.orderId;
+			        var actions = [];
+			        actions.push('<a class="btn btn-success btn-xs"  href="#" onclick="alreadywork(\'' + row.orderId + '\')"><i class="fa fa-edit"></i>设置为已处理</a> ');
+			        // actions.push('<a class="btn btn-danger btn-xs" href="#" onclick="$.operate.remove(\'' + row.deviceId + '\')"><i class="fa fa-remove"></i>删除</a>');
+			        return actions.join('');
+			
+			        //return '<a class="btn btn-xs btn-danger" onclick="delPermission(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>';
+			    }
+			}]
   };
 
 $(function(){
-	var oTab=$.table.oTableInitworkorder(options);
+	var oTab=$.table.oTableInitworkorderundo(options);
 	oTab.Init();
 })
 </script>

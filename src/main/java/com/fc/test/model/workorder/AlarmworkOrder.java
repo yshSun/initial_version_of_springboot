@@ -1,8 +1,9 @@
 package com.fc.test.model.workorder;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AlarmworkOrder {
+public class AlarmworkOrder implements Serializable {
     private Integer orderId;
 
     private String groupId;

@@ -161,7 +161,8 @@
 <script th:src="@{{path}static/admin/assets/js/layer/layer.js(path=${rootPath})}" type="text/javascript"></script>
 <!-- 遮罩层 -->
 <script th:src="@{{path}static/admin/assets/js/blockUI/jquery.blockUI.js(path=${rootPath})}" type="text/javascript"></script>
-
+<!--控制-->
+<script th:src="@{{path}static/admin/device/js/device-changefirestate.js(path=${rootPath})}" type="text/javascript"></script>
 
 <script type="text/javascript">
 <!-- jquery-export 表格导出插件 -->
@@ -172,8 +173,9 @@ var removeUrl=window.rootPath+"/DeviceController/remove";
 var createUrl=window.rootPath+"/DeviceController/add";
 var updateUrl=window.rootPath+"/DeviceController/edit/{id}";
 var exportUrl=window.rootPath+"/DeviceController/export";
-var setfireonUrl=window.rootPath+"/DeviceController/setfireon/{id}";
-var setfireoffUrl=window.rootPath+"/DeviceController/setfireoff/{id}";
+
+
+
   var options = {
 		dataUrl: dataUrl,
         createUrl: createUrl,
@@ -236,8 +238,8 @@ var setfireoffUrl=window.rootPath+"/DeviceController/setfireoff/{id}";
                formatter: function (value, row, index) {
                    var id = row.deviceId;
                    var actions = [];
-                   actions.push('<a class="btn btn-success btn-xs"  href="#" onclick="$.operate.setfireon(\'' + row.deviceId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                   actions.push('<a class="btn btn-danger btn-xs" href="#" onclick="$.operate.setfireoff(\'' + row.deviceId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                   actions.push('<a class="btn btn-success btn-xs"  href="#" onclick="fire_seton(\'' + row.deviceId + '\')"><i class="fa fa-remove"></i>设置报警</a> ');
+                   actions.push('<a class="btn btn-danger btn-xs" href="#" onclick="fire_setoff(\'' + row.deviceId + '\')"><i class="fa fa-edit"></i>报警解除</a>');
                    return actions.join('');
 
                    //return '<a class="btn btn-xs btn-danger" onclick="delPermission(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>';

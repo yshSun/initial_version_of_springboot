@@ -5,6 +5,7 @@ import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.model.custom.TableSplitResult;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.model.custom.TitleVo;
+import com.fc.test.model.jpa.TDeviceFoundation;
 import com.fc.test.model.workorder.AlarmworkOrder;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -48,6 +49,72 @@ public class WorkorderController extends BaseController {
         return  result;
     }
 
+    //已更改
+    @PostMapping("listdo")
+    @RequiresPermissions("system:user:list")
+    @ResponseBody
+    public Object listdo(Tablepar tablepar, String username){
+        PageInfo<AlarmworkOrder> page=alarmWorkOrderServer.listdo(tablepar,username) ;
+        TableSplitResult<AlarmworkOrder> result=new TableSplitResult<AlarmworkOrder>(page.getPageNum(), page.getTotal(), page.getList());
+        return  result;
+    }
+
+
+    //已更改
+    @PostMapping("listundo")
+    @RequiresPermissions("system:user:list")
+    @ResponseBody
+    public Object listundo(Tablepar tablepar, String username){
+        PageInfo<AlarmworkOrder> page=alarmWorkOrderServer.listundo(tablepar,username) ;
+        TableSplitResult<AlarmworkOrder> result=new TableSplitResult<AlarmworkOrder>(page.getPageNum(), page.getTotal(), page.getList());
+        return  result;
+    }
+
+
+
+
+
+
+    //已更改
+    @GetMapping("viewundo")
+    @RequiresPermissions("system:user:view")
+    public String viewundo(Model model)
+    {
+
+        setTitle(model, new TitleVo("工单列表", "运维管理", true,"欢迎进入运维界面", true, false));
+        return prefix + "/listundo";
+    }
+
+    //已更改
+    @GetMapping("viewdo")
+    @RequiresPermissions("system:user:view")
+    public String viewdo(Model model)
+    {
+
+        setTitle(model, new TitleVo("工单列表", "运维管理", true,"欢迎进入运维界面", true, false));
+        return prefix + "/listdo";
+    }
+
+
+
+    /**
+     * 修改设备火警状态
+     * @param id
+     *
+     * @return
+     */
+    @PostMapping("/alreadywork")
+    @ResponseBody
+    public AjaxResult alreadywork(AlarmworkOrder t)
+    {	//查询所有角色
+
+        if(alarmWorkOrderServer.getWorkingtate(t.getOrderId())==0){
+            return toAjax(alarmWorkOrderServer.markOrder(t.getOrderId(), 1));
+        }
+        else
+            return toAjax(0);
+
+    }
 
 
 
