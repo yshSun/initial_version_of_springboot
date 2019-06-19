@@ -525,62 +525,52 @@ public class NotificationLogEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateEqualTo(String value) {
+        public Criteria andNotifyStateEqualTo(Byte value) {
             addCriterion("notify_state =", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateNotEqualTo(String value) {
+        public Criteria andNotifyStateNotEqualTo(Byte value) {
             addCriterion("notify_state <>", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateGreaterThan(String value) {
+        public Criteria andNotifyStateGreaterThan(Byte value) {
             addCriterion("notify_state >", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateGreaterThanOrEqualTo(String value) {
+        public Criteria andNotifyStateGreaterThanOrEqualTo(Byte value) {
             addCriterion("notify_state >=", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateLessThan(String value) {
+        public Criteria andNotifyStateLessThan(Byte value) {
             addCriterion("notify_state <", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateLessThanOrEqualTo(String value) {
+        public Criteria andNotifyStateLessThanOrEqualTo(Byte value) {
             addCriterion("notify_state <=", value, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateLike(String value) {
-            addCriterion("notify_state like", value, "notifyState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNotifyStateNotLike(String value) {
-            addCriterion("notify_state not like", value, "notifyState");
-            return (Criteria) this;
-        }
-
-        public Criteria andNotifyStateIn(List<String> values) {
+        public Criteria andNotifyStateIn(List<Byte> values) {
             addCriterion("notify_state in", values, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateNotIn(List<String> values) {
+        public Criteria andNotifyStateNotIn(List<Byte> values) {
             addCriterion("notify_state not in", values, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateBetween(String value1, String value2) {
+        public Criteria andNotifyStateBetween(Byte value1, Byte value2) {
             addCriterion("notify_state between", value1, value2, "notifyState");
             return (Criteria) this;
         }
 
-        public Criteria andNotifyStateNotBetween(String value1, String value2) {
+        public Criteria andNotifyStateNotBetween(Byte value1, Byte value2) {
             addCriterion("notify_state not between", value1, value2, "notifyState");
             return (Criteria) this;
         }
