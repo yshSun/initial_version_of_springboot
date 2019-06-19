@@ -21,7 +21,7 @@ public class mapControllerMain extends BaseController {
     @GetMapping("view")
     public String mapMain(Model model) {
         System.out.println("mapController");
-        setTitle(model, new TitleVo("欢迎登陆", "BaiduMap()", true, "你好，智慧烟感!", false, false));
+        setTitle(model, new TitleVo("监控管理", "地图监控", true, "欢迎进入监控管理", false, false));
         return "admin/baidumap";
     }
 

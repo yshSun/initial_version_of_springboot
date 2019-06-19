@@ -15,6 +15,10 @@
             margin: 0;
             font-family: "微软雅黑";
         }
+        .select-list ul li {
+            list-style-type: none;
+            float: left;
+        }
     </style>
 
 
@@ -56,6 +60,11 @@
                         <button onclick=returnCenter()>地图居中</button>
                     </div>
                     <div id="allmap"></div>
+<!--                    <div class="container" style="padding-top: 10px;margin-left: 10px;margin-right: 10px;">-->
+
+                        <table id="dataTable" class="table-striped footable-res footable metro-blue" data-page-size="6"></table>
+
+<!--                    </div>-->
                     <p id="Demo"></p>
                     <script>
                         document.getElementById("allmap").style.height = window.innerHeight * 0.5 + 'px'
@@ -97,6 +106,18 @@
         src="http://api.map.baidu.com/api?v=2.0&ak=vDM0AnymfUocArv4lG2L39w9LZwOp5oT"></script>
 <script type="text/javascript" src="/static/admin/assets/js/toggle_close.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<!-- bootstarp 表格 -->
+<script th:src="@{{path}static/admin/assets/js/bootstrap/js/bootstrap-table/bootstrap-table.min.js(path=${rootPath})}"
+        type="text/javascript"></script>
+<script th:src="@{{path}static/admin/assets/js/bootstrap/js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js(path=${rootPath})}"
+        type="text/javascript"></script>
+<script th:src="@{{path}static/admin/assets/js/bootstrap/js/base_list.js(path=${rootPath})}"
+        type="text/javascript"></script>
+<!-- 导出 -->
+<script th:src="@{{path}static/admin/assets/js/bootstrap/extensions/export/bootstrap-table-export.js(path=${rootPath})}"
+        type="text/javascript"></script>
+<script th:src="@{{path}static/admin/assets/js/bootstrap/extensions/export/tableExport.js(path=${rootPath})}"
+        type="text/javascript"></script>
 <script type="text/javascript">
     // 百度地图API功能
     var map = new BMap.Map("allmap");
@@ -108,11 +129,57 @@
     heatmapOverlay_ = new BMapLib.HeatmapOverlay({"radius": 20});
 
 
-
-
     //heatMapUpdate();
 
 
+</script>
+
+<script>
+    //table
+    var dataUrl = window.rootPath + "/DeviceController/list";
+    var options = {
+        dataUrl: dataUrl,
+        sortName: "roleSort",
+        modalName: "用户",
+        search: 0,
+        id: 'deviceId',
+        dataColumns: [
+            {
+                field: 'deviceId',
+                title: '设备序号'
+            },
+            {
+                field: 'stateId',
+                title: '设备序列号'
+            },
+
+            {
+                field: 'deviceBelong',
+                title: '设备归属'
+            },
+            {
+                field: 'deviceHealth',
+                title: '设备健康状态'
+            }, {
+                field: 'stateTmp',
+                title: '温度'
+            }, {
+                field: 'stateHum',
+                title: '湿度'
+            }, {
+                field: 'statePower',
+                title: '电量'
+            }, {
+                field: 'stateIsfire',
+                title: '报警状态'
+            }]
+    };
+    $(function(){
+        var oTab=$.table.oTableInit(options);
+
+        oTab.Init();
+
+    })
 </script>
 <script>
 
@@ -186,7 +253,13 @@
     //     xhttp.open("GET", "/mapController/getPoint", true);
     //     xhttp.send();
     // }
-
+function getFireState(a) {
+    if(a===1){
+        return "报警"
+    } else{
+        return "正常"
+    }
+}
 
     function loadDoc() {
         map_json = null;
@@ -206,7 +279,7 @@
                         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
                     }
-                    var content = [map_json[i].deviceId, map_json[i].info1];
+                    var content = ["设备ID: " + map_json[i].deviceId, "火情: " + getFireState(map_json[i].stateIsfire) +"<br>" + "温度: "+ map_json[i].stateTmp];
                     addClickHandler(content, marker)
                 }
             }
@@ -269,7 +342,7 @@
                                             marker.setAnimation(BMAP_ANIMATION_BOUNCE);
 
                                         }
-                                        var content = [map_json_update[i].name, map_json_update[i].info1];
+                                        var content = ["设备ID: " + map_json[i].deviceId, "火情: " + getFireState(map_json[i].stateIsfire) +"<br>" + "温度: "+ map_json[i].stateTmp];
                                         addClickHandler(content, marker)
 
                                     }
@@ -361,11 +434,11 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("1")
+                //console.log("1")
                 heat_map_json = JSON.parse(this.responseText)
-                console.log("2")
+                //console.log("2")
                 heatmapOverlay_.setDataSet({data: heat_map_json, max: 2000});
-                console.log("3")
+                //console.log("3")
             }
 
         }
@@ -373,8 +446,6 @@
         xhttp.send();
     }
 </script>
-
-
 
 
 </body>
