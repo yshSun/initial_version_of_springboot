@@ -434,15 +434,24 @@ function getFireState(a) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                //console.log("1")
                 heat_map_json = JSON.parse(this.responseText)
-                //console.log("2")
-                heatmapOverlay_.setDataSet({data: heat_map_json, max: 2000});
-                //console.log("3")
+                heat_map_json_2 = [];
+                for (res in heat_map_json) {
+
+                    let tmp = {
+                        lng: heat_map_json[res].deviceLocationX,
+                        lat: heat_map_json[res].deviceLocationY,
+                        count: heat_map_json[res].stateTmp * 40
+                    }
+                    console.log(tmp);
+                    heat_map_json_2.push(tmp)
+                }
+                heatmapOverlay_.setDataSet({data: heat_map_json_2, max: 2000});
             }
 
         }
-        xhttp.open("GET", "/mapController/getHeatMapPoint", true);
+        //xhttp.open("GET", "/mapController/getHeatMapPoint", true);
+        xhttp.open("GET", "/DeviceStateController/getallinfo", true);
         xhttp.send();
     }
 </script>
