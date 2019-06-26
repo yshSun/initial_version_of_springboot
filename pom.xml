@@ -5,7 +5,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>springboot_swagger2</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>springboot_swagger2</name>
@@ -225,12 +225,14 @@
                         <overwrite>true</overwrite>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
     </build>
 
     <!-- 阿里云maven仓库 -->
