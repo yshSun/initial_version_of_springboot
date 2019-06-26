@@ -20,7 +20,7 @@ server :
 spring :
   # 环境 dev|test|prod
   profiles :
-    active : dev
+    active : test
   servlet:
     multipart:
       max-request-size: 100MB

@@ -21,7 +21,7 @@ public class mapControllerMain extends BaseController {
     @GetMapping("view")
     public String mapMain(Model model) {
         System.out.println("mapController");
-        setTitle(model, new TitleVo("Map", "map", true, "welcome to map", false, false));
+        setTitle(model, new TitleVo("监控管理", "地图监控", true, "欢迎进入监控管理", false, false));
         return "admin/baidumap";
     }
 
@@ -56,19 +56,21 @@ public class mapControllerMain extends BaseController {
     @ResponseBody
     public List<heatMapPoint> get_heat_map_point(Model model) {
         Map<String, Double> heatMapConfig = new HashMap<String, Double>();
-        heatMapConfig.put("sw_lng", 116.356641);
-        heatMapConfig.put("sw_lat", 39.889815);
-        heatMapConfig.put("ne_lng", 116.451359);
-        heatMapConfig.put("ne_lat", 39.940176);
+        //112.625781,38.453245
+        heatMapConfig.put("sw_lng", 112.625781);
+        heatMapConfig.put("sw_lat", 38.453245);
+        //112.768935,38.507703
+        heatMapConfig.put("ne_lng", 112.768935);
+        heatMapConfig.put("ne_lat", 38.507703);
         heatMapConfig.put("lngSPen", Math.abs(heatMapConfig.get("sw_lng") - heatMapConfig.get("ne_lng")));
         heatMapConfig.put("latSPen", Math.abs(heatMapConfig.get("sw_lat") - heatMapConfig.get("ne_lat")));
 
         List<heatMapPoint> heatMapPoints = new ArrayList<>();
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 200; i++) {
             heatMapPoints.add(new heatMapPoint(
-                    heatMapConfig.get("sw_lng") + heatMapConfig.get("lngSPen") * (Math.random() * 5),
-                    heatMapConfig.get("ne_lat") - heatMapConfig.get("latSPen") * (Math.random() * 5),
-                    (float) Math.random() * 20 + (float) 20.0));
+                    heatMapConfig.get("sw_lng") + heatMapConfig.get("lngSPen") * (Math.random() * 0.7),
+                    heatMapConfig.get("ne_lat") - heatMapConfig.get("latSPen") * (Math.random() * 0.7),
+                    (float) Math.random() * 100 + (float) 20.0));
         }
         System.out.println(heatMapPoints);
         return heatMapPoints;

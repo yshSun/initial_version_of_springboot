@@ -7,6 +7,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.fasterxml.jackson.databind.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +65,8 @@ public class CaptchaController extends BaseController
                 capStr = code = captchaProducer.createText();
                 bi = captchaProducer.createImage(capStr);
             }
-            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
+            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, "noCode");
+            //session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
             out = response.getOutputStream();
             ImageIO.write(bi, "jpg", out);
             out.flush();
